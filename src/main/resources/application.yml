@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: monitor
+
+server:
+  port: 9010
+
+prometheus:
+  namespace: demo
+  subsystem: ${spring.application.name}
+
+# actuator
+management:
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    export:
+      prometheus:
+        pushgateway:
+          #pushgateway地址
+          baseUrl: 127.0.0.1:9091
+          #推送周期
+          pushRate: 5s
+          #job定义名
+          job: ${spring.application.name}
+          #启用推送
+          enabled: true
